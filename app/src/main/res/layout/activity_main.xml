@@ -10,11 +10,11 @@
 
 
     <TextView
-        android:id="@+id/appName"
+        android:id="@+id/appTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Roll the Dice"
+        android:text="@string/appTitle"
         android:textColor="@color/black"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appName">
+        app:layout_constraintTop_toBottomOf="@+id/appTitle">
 
     </LinearLayout>
 
@@ -50,7 +50,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/rectangular_button"
-            android:text="ROLL!"
+            android:text="@string/btnRollText"
             android:textColor="@color/black"
             android:textSize="36sp" />
 
@@ -60,7 +60,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/rectangular_button"
-            android:text="STOP"
+            android:text="@string/btnStopText"
             android:textColor="@color/black"
             android:textSize="36sp" />
 
