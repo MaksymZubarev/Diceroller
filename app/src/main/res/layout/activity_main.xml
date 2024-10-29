@@ -37,7 +37,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/dice_one" />
+                app:srcCompat="@drawable/dice_one" />
 
             <ImageView
                 android:id="@+id/diceView2"
@@ -48,7 +48,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diceView1"
-                tools:srcCompat="@drawable/dice_one" />
+                app:srcCompat="@drawable/dice_one" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,7 +71,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
-                tools:srcCompat="@drawable/dice_one" />
+                app:srcCompat="@drawable/dice_one" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,7 +93,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/dice_one" />
+                app:srcCompat="@drawable/dice_one" />
 
             <ImageView
                 android:id="@+id/diceView5"
@@ -104,7 +104,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diceView4"
-                tools:srcCompat="@drawable/dice_one" />
+                app:srcCompat="@drawable/dice_one" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
