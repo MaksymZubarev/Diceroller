@@ -1,90 +1,84 @@
 package com.example.diceroller
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Observer
 import com.example.diceroller.databinding.ActivityMainBinding
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: DiceViewModel by viewModels()
 
     private lateinit var diceViewer: List<ImageView>
-
-    private var isLoopWorking by Delegates.notNull<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        Log.d(TAG, "onCreate: activity = $this")
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        isLoopWorking = false
+        diceViewer = listOf(
+            binding.diceView1, binding.diceView2,
+            binding.diceView3, binding.diceView4,
+            binding.diceView5
+        )
 
-        diceViewer = listOf(binding.diceView1,
-            binding.diceView2, binding.diceView3,
-            binding.diceView4, binding.diceView5)
+        // Спостерігаємо за змінами у значеннях кубиків
+        viewModel.diceValues.observe(this, Observer { diceValues ->
+            diceValues?.let {
+                for (i in it.indices) {
+                    diceViewer[i].setImageResource(getDiceImage(it[i]))
+                }
+            }
+        })
+
+        // Спостерігаємо за станом обертання
+        viewModel.isRolling.observe(this, Observer { isRolling ->
+            binding.btnRoll.isEnabled = !isRolling
+            binding.btnRoll.visibility = if (isRolling) View.GONE else View.VISIBLE
+            binding.btnStop.isEnabled = isRolling
+            binding.btnStop.visibility = if (isRolling) View.VISIBLE else View.GONE
+        })
 
         binding.btnRoll.setOnClickListener {
-            lifecycleScope.launch {
-                rollStart()
-            }
+            Log.d(TAG, "onCreate: Rolling starts")
+            Toast.makeText(this, "ROLL! clicked", Toast.LENGTH_SHORT).show()
+            viewModel.rollStart()
         }
 
         binding.btnStop.setOnClickListener {
-            lifecycleScope.launch {
-                rollStop()
-            }
+            Toast.makeText(this, "STOP clicked", Toast.LENGTH_SHORT).show()
+            viewModel.rollStop()
         }
     }
 
-    private suspend fun rollStart() {
-
-        binding.btnRoll.isEnabled = false
-        binding.btnRoll.visibility = View.GONE
-
-        binding.btnStop.isEnabled = true
-        binding.btnStop.visibility = View.VISIBLE
-
-        Toast.makeText(this, "ROLL! clicked", Toast.LENGTH_SHORT).show()
-
-        isLoopWorking = true
-
-        while (isLoopWorking) {
-            delay(100)
-            for (i in 0..4) {
-                when ((1..6).random()) {
-                    1 -> diceViewer[i].setImageResource(R.drawable.dice_one)
-                    2 -> diceViewer[i].setImageResource(R.drawable.dice_two)
-                    3 -> diceViewer[i].setImageResource(R.drawable.dice_three)
-                    4 -> diceViewer[i].setImageResource(R.drawable.dice_four)
-                    5 -> diceViewer[i].setImageResource(R.drawable.dice_five)
-                    6 -> diceViewer[i].setImageResource(R.drawable.dice_six)
-                }
-            }
+    private fun getDiceImage(value: Int): Int {
+        return when (value) {
+            1 -> R.drawable.dice_one
+            2 -> R.drawable.dice_two
+            3 -> R.drawable.dice_three
+            4 -> R.drawable.dice_four
+            5 -> R.drawable.dice_five
+            6 -> R.drawable.dice_six
+            else -> R.drawable.dice_one // дефолтне значення
         }
     }
 
-    private suspend fun rollStop() {
+    override fun onDestroy() {
+        super.onDestroy()
 
-        binding.btnStop.isEnabled = false
-        binding.btnStop.visibility = View.GONE
+        Log.d(TAG, "onDestroy: ")
+    }
 
-        binding.btnRoll.isEnabled = true
-        binding.btnRoll.visibility = View.VISIBLE
-
-        Toast.makeText(this, "STOP clicked", Toast.LENGTH_SHORT).show()
-
-        isLoopWorking = false
+    companion object {
+        val TAG = "XXXXXX"
     }
 }
