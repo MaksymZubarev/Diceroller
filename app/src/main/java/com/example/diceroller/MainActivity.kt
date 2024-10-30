@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.diceroller.databinding.ActivityMainBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,12 +20,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var diceViewer: List<ImageView>
 
+    private var isLoopWorking by Delegates.notNull<Boolean>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        isLoopWorking = false
 
         diceViewer = listOf(binding.diceView1,
             binding.diceView2, binding.diceView3,
@@ -53,7 +58,9 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this, "ROLL! clicked", Toast.LENGTH_SHORT).show()
 
-        while (true) {
+        isLoopWorking = true
+
+        while (isLoopWorking) {
             delay(100)
             for (i in 0..4) {
                 when ((1..6).random()) {
@@ -78,6 +85,6 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this, "STOP clicked", Toast.LENGTH_SHORT).show()
 
+        isLoopWorking = false
     }
-
 }
