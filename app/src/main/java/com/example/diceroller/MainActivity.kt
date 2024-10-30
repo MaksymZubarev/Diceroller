@@ -2,6 +2,7 @@ package com.example.diceroller
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -9,11 +10,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.diceroller.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var diceViewer: List<ImageView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        diceViewer = listOf(binding.diceView1,
+            binding.diceView2, binding.diceView3,
+            binding.diceView4, binding.diceView5)
 
         binding.btnRoll.setOnClickListener {
             lifecycleScope.launch {
@@ -45,6 +53,19 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this, "ROLL! clicked", Toast.LENGTH_SHORT).show()
 
+        while (true) {
+            delay(100)
+            for (i in 0..4) {
+                when ((1..6).random()) {
+                    1 -> diceViewer[i].setImageResource(R.drawable.dice_one)
+                    2 -> diceViewer[i].setImageResource(R.drawable.dice_two)
+                    3 -> diceViewer[i].setImageResource(R.drawable.dice_three)
+                    4 -> diceViewer[i].setImageResource(R.drawable.dice_four)
+                    5 -> diceViewer[i].setImageResource(R.drawable.dice_five)
+                    6 -> diceViewer[i].setImageResource(R.drawable.dice_six)
+                }
+            }
+        }
     }
 
     private suspend fun rollStop() {
