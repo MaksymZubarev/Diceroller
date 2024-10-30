@@ -1,5 +1,4 @@
 package com.example.diceroller
-import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,9 +25,9 @@ class DiceViewModel : ViewModel() {
 
         viewModelScope.launch {
             while (_isRolling.value == true) {
-                delay(300)
-                Log.d(TAG, "onProcess: Rolling...")
+//                Log.d(TAG, "onProcess: Rolling...")
                 _diceValues.value = List(5) { (1..6).random() }
+                delay(100)
             }
         }
     }

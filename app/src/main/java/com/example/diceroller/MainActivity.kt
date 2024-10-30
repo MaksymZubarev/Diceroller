@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -50,12 +49,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnRoll.setOnClickListener {
             Log.d(TAG, "onCreate: Rolling starts")
-            Toast.makeText(this, "ROLL! clicked", Toast.LENGTH_SHORT).show()
             viewModel.rollStart()
         }
 
         binding.btnStop.setOnClickListener {
-            Toast.makeText(this, "STOP clicked", Toast.LENGTH_SHORT).show()
             viewModel.rollStop()
         }
     }
